@@ -16,5 +16,8 @@
 	},
 	"include": [
 		"src/**/*.ts"
-	] // 包含所有 ts 文件
+	], // 包含所有 ts 文件
+	"exclude": [
+		"node_modules"
+	]
 }

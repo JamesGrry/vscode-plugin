@@ -10,20 +10,28 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:myExtension.helloWorld"
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "codeStats.refresh",
-        "title": "刷新代码统计"
+        "command": "clipboardHistory.insert",
+        "title": "Insert from Clipboard"
       },
       {
-        "command": "codeStats.showDetails",
-        "title": "显示代码统计详情"
+        "command": "clipboardHistory.clear",
+        "title": "Clear History"
       }
-    ]
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "clipboardHistoryView",
+          "name": "Clipboard History"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",
