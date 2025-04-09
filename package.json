@@ -1,7 +1,7 @@
 {
-  "name": "my-vscode-plugin",
-  "displayName": "my-vscode-plugin",
-  "description": "A simple VS Code plugin that starts build and shows webview.",
+  "name": "hello-world-extension",
+  "displayName": "hello-world-extension",
+  "description": "A simple Hello World extension for VSCode",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.99.0"
@@ -9,24 +9,26 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:myExtension.helloWorld"
+  ],
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.start",
-        "title": "Start Build Process"
+        "command": "codeStats.refresh",
+        "title": "刷新代码统计"
       },
       {
-        "command": "extension.showWebview",
-        "title": "Show Webview Panel"
+        "command": "codeStats.showDetails",
+        "title": "显示代码统计详情"
       }
     ]
   },
   "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",

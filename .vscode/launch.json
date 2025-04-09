@@ -1,21 +1,16 @@
-// A launch configuration that compiles the extension and then opens it inside a new window
-// Use IntelliSense to learn about possible attributes.
-// Hover to view descriptions of existing attributes.
-// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
 	"version": "0.2.0",
 	"configurations": [
-		{
-			"name": "Run Extension",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}"
-			],
-			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
-			],
-			"preLaunchTask": "${defaultBuildTask}"
-		}
+			{
+					"name": "Run Extension (Debug)",
+					"type": "extensionHost",        // 必须为 extensionHost‌:ml-citation{ref="1" data="citationList"}
+					"request": "launch",
+					"args": [
+							"--extensionDevelopmentPath=${workspaceFolder}" // 指定插件根目录‌:ml-citation{ref="4" data="citationList"}
+					],
+					"preLaunchTask": "npm: watch",  // 关联编译任务‌:ml-citation{ref="8" data="citationList"}
+					"outFiles": ["${workspaceFolder}/out/**/*.js"], // 编译输出路径‌:ml-citation{ref="8" data="citationList"}
+					"outputCapture": "std"          // 捕获子进程日志‌:ml-citation{ref="8" data="citationList"}
+			}
 	]
 }

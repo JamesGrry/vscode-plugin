@@ -1,40 +1,17 @@
-// See https://go.microsoft.com/fwlink/?LinkId=733558
-// for the documentation about the tasks.json format
 {
 	"version": "2.0.0",
 	"tasks": [
-		{
-			"type": "npm",
-			"script": "watch",
-			"problemMatcher": "$ts-webpack-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
+			{
+					"type": "npm",
+					"script": "watch",              // 对应 package.json 中的脚本‌:ml-citation{ref="8" data="citationList"}
+					"problemMatcher": ["$tsc-watch"],
+					"group": {
+							"kind": "build",
+							"isDefault": true
+					},
+					"isBackground": true,   // 标记为后台任务（长期运行）
+					"label": "npm: watch",          // 必须与 launch.json 的 preLaunchTask 一致‌:ml-citation{ref="8" data="citationList"}
+					"detail": "监控 TypeScript 文件变化并实时编译"
 			}
-		},
-		{
-			"type": "npm",
-			"script": "watch-tests",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
-			},
-			"group": "build"
-		},
-		{
-			"label": "tasks: watch-tests",
-			"dependsOn": [
-				"npm: watch",
-				"npm: watch-tests"
-			],
-			"problemMatcher": []
-		}
 	]
 }

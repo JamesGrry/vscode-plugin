@@ -1,6 +1,6 @@
-# my-vscode-plugin README
+# hello-world-extension README
 
-This is the README for your extension "my-vscode-plugin". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "hello-world-extension". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

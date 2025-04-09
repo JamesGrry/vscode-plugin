@@ -1,51 +1,61 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Congratulations, your extension "my-vscode-plugin" is now active!');
+    // 创建状态栏项
+    const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    statusBarItem.command = 'codeStats.showDetails'; // 绑定点击命令
+    context.subscriptions.push(statusBarItem);
 
-    // 注册 'start' 命令
-    let startCommand = vscode.commands.registerCommand('extension.start', () => {
-        vscode.window.showInformationMessage('Start command executed!');
-        startBuildProcess();
+    // 注册命令：刷新统计
+    const refreshCommand = vscode.commands.registerCommand('codeStats.refresh', () => {
+        updateStatusBar();
     });
 
-    // 注册 'showWebview' 命令，展示前端界面
-    let showWebviewCommand = vscode.commands.registerCommand('extension.showWebview', () => {
-        const panel = vscode.window.createWebviewPanel(
-            'webviewExample',
-            'My Webview Panel',
-            vscode.ViewColumn.One,
-            {}
+    // 注册命令：显示详细信息
+    const showDetailsCommand = vscode.commands.registerCommand('codeStats.showDetails', () => {
+        const stats = calculateStats();
+        vscode.window.showInformationMessage(
+            `📊 代码统计：
+            行数: ${stats.lines}
+            字符数: ${stats.characters}
+            单词数: ${stats.words}`
         );
-
-        panel.webview.html = getWebviewContent();
     });
 
-    context.subscriptions.push(startCommand, showWebviewCommand);
+    // 监听文件内容变化
+    vscode.workspace.onDidChangeTextDocument(() => updateStatusBar());
+    vscode.window.onDidChangeActiveTextEditor(() => updateStatusBar());
+
+    // 初始化
+    updateStatusBar();
+    statusBarItem.show();
+
+    // 将命令添加到订阅
+    context.subscriptions.push(refreshCommand, showDetailsCommand);
 }
 
-// 启动构建进程（比如npm start）
-function startBuildProcess() {
-    exec('npm start', (error, stdout, stderr) => {
-        if (error) {
-            vscode.window.showErrorMessage(`exec error: ${error}`);
-            return;
-        }
-        vscode.window.showInformationMessage(`Build started: ${stdout}`);
-    });
+// 计算统计信息
+function calculateStats() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {return { lines: 0, characters: 0, words: 0 };}
+
+    const document = editor.document;
+    const text = document.getText();
+
+    return {
+        lines: document.lineCount,
+        characters: text.length,
+        words: text.split(/\s+/).filter(word => word.length > 0).length
+    };
 }
 
-// 返回一个简单的HTML内容，可以作为Webview的内容
-function getWebviewContent() {
-    return `
-        <html>
-        <body>
-            <h1>Hello from your VS Code Webview!</h1>
-            <p>This is an example of using Webview in a VS Code extension.</p>
-        </body>
-        </html>
-    `;
+// 更新状态栏
+function updateStatusBar() {
+    const stats = calculateStats();
+    const statusText = `📄 ${stats.lines} 行 | ${stats.characters} 字符 | ${stats.words} 词`;
+    const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    statusBarItem.text = statusText;
+    statusBarItem.show();
 }
 
 export function deactivate() {}
