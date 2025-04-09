@@ -1,0 +1,22 @@
+# 忽略所有 .log 文件
+*.log
+
+# 忽略特定目录（如日志目录）
+logs/
+
+
+# 忽略编译产物
+*.pyc
+__pycache__/
+build/
+dist/
+out/
+
+# 忽略系统文件（如 macOS 的 .DS_Store）
+.DS_Store
+
+# 排除 node_modules 目录
+node_modules/
+
+# 例外：不忽略 important.log
+!important.log
